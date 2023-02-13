@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.mrbird.web.dao.WebUserMapper">
+  <resultMap id="BaseResultMap" type="cc.mrbird.web.domain.WebUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="photo_url" jdbcType="VARCHAR" property="photoUrl" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="register_date" jdbcType="TIMESTAMP" property="registerDate" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="active_code" jdbcType="VARCHAR" property="activeCode" />
+    <result column="hasActive" jdbcType="INTEGER" property="hasActive" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+    id, username, password, sex, photo_url, email, type, register_date, signature, level, 
+    active_code, hasActive, phone
+  </sql>
+
+
+  <select id="findWebUserByPage" resultMap="BaseResultMap"  parameterType="cc.mrbird.web.domain.WebUser">
+    select
+    <include refid="Base_Column_List" />
+    from user u
+    where 1=1
+    <if test="username != null and username != ''">
+      AND u.username like '%${username}%'
+    </if>
+    <if test="email != null and email != ''">
+      AND u.email like '%${email}%'
+    </if>
+    <if test="sex != null and sex != ''">
+      AND u.sex = #{sex}
+    </if>
+    <if test="hasActive != null ">
+      AND u.hasActive = #{hasActive}
+    </if>
+    order by u.id
+  </select>
+
+  <select id="selectAllIds" resultType="java.lang.String">
+
+    select id from user
+
+  </select>
+
+
+</mapper>

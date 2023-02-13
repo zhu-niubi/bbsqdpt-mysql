@@ -1,0 +1,148 @@
+<div class="modal fade" id="webuser-add" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title pull-left" id="user-add-modal-title">新增用户</h3>
+            </div>
+            <div class="modal-body">
+                <form id="user-add-form">
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+					               	 用户名：
+					            </span>
+                                <div class="form-group">
+                                    <input type="text" name="username" class="form-control">
+                                    <input type="text" hidden name="id" id="id" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row user_password">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+					               	 密码：
+					            </span>
+                                <div class="form-group">
+                                    <input type="text" name="password" value="123456" readonly class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+					               	 邮箱：
+					            </span>
+                                <div class="form-group">
+                                    <input type="text" name="email" class="form-control">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+					               	 手机：
+					            </span>
+                                <div class="form-group">
+                                    <input type="text" name="phone" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="display:none;" id="checkhasActive">
+                        <div class="col-sm-11">
+                            <div class="input-group" style="margin-top:10px;">
+                                <span class="input-group-addon">
+					               	 激活状态：
+					             </span>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" name="checkhasActive" checked class="toggle-switch__checkbox" >
+                                    <input type="text" hidden name="hasActive" class="form-control">
+                                    <i class="toggle-switch__helper"></i>
+                                </div>
+                                <span class="input-group-addon" id="hasActive" style="margin-left: 10px;">
+	                                 	已激活
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row" style="display:none;" id="level">
+                        <div class="col-sm-11">
+                            <div class="input-group" style="margin-top:10px;">
+                                <span class="input-group-addon">
+					               	级别：
+					             </span>
+                                <div class="form-group">
+                                    <label class="custom-control custom-radio">
+                                        <input name="level" type="radio" value="0" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">正常</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input name="level" type="radio" value="3" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">禁止评论</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input name="level" type="radio" value="2" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">禁止发帖</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input name="level" type="radio" value="1" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">禁止登录</span>
+                                    </label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group" style="margin-top:10px;">
+                                <span class="input-group-addon">
+					               	性别：
+					             </span>
+                                <div class="form-group">
+                                    <label class="custom-control custom-radio">
+                                        <input name="sex" type="radio" value="男" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">男</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input name="sex" type="radio" value="女" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">女</span>
+                                    </label>
+                                    <label class="custom-control custom-radio">
+                                        <input name="sex" type="radio" value="保密" class="custom-control-input">
+                                        <span class="custom-control-indicator"></span>
+                                        <span class="custom-control-description">保密</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-save" id="user-add-button" name="save">保存</button>
+                <button type="button" class="btn btn-secondary btn-close">关闭</button>
+                <button class="btn-hide"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-src="@{js/app/web/user/userAdd.js}"></script>

@@ -1,0 +1,61 @@
+<div class="modal fade" id="advert-add" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title pull-left" id="advert-add-modal-title">新增图片</h3>
+            </div>
+            <div class="modal-body">
+                <form id="advert-add-form">
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+					               	 序号：
+					            </span>
+                                <div class="form-group">
+                                    <input type="text" name="orders" class="form-control">
+                                    <input type="hidden" name="id" class="form-control">
+                                    <input type="hidden" id="photo" name="photo" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+					               	 图片：
+					            </span>
+                                <div class="form-group">
+                                    <img id="img" class="img" src="" alt="">
+                                    <input type="file" class="file"   placeholder="advertPhoto" id="photoUrl" name="photo1" >
+                                    <span id="icon" style="margin-top: .5rem"  class="zmdi zmdi-upload" >上传图片</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-save" id="advert-add-button" name="save">保存</button>
+                <button type="button" class="btn btn-secondary btn-close" >关闭</button>
+                <button class="btn-hide"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-src="@{js/app/web/advert/advertAdd.js}"></script>
+<style>
+    .file {
+        position: absolute;
+        width: 300px;
+        height: 200px;
+        right: 206px;
+        top: 0;
+        opacity: 0;
+    }
+    .img2{
+        width: 300px;
+        height: 200px;
+    }
+</style>

@@ -1,0 +1,67 @@
+<div class="modal fade" id="webuser-list" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+              <div id="data-table_wrapper" class="dataTables_wrapper">
+                 <div class="dataTables_buttons hidden-sm-down actions">
+                     <span class="actions__item zmdi zmdi-search" onclick="searchuser()" title="搜索" /> <span class="actions__item zmdi zmdi-refresh-alt" onclick="refreshuser()" title="刷新" />
+                  </div>
+                  <input type="text" hidden  id="systemId" class="form-control">
+                 <div id="data-table_filter" class="dataTables_filter">
+                      <form class="user-table-form">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon"> 用户名： </span>
+                                    <div class="form-group">
+                                        <input type="text" name="username" class="form-control"> <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon"> 邮箱： </span>
+                                    <div class="form-group">
+                                        <input type="text" name="email" class="form-control"> <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon"> 性别： </span>
+                                    <div class="form-group">
+                                        <select class="form-control" name="sex">
+                                            <option value="" selected>所有</option>
+                                            <option value="男">男</option>
+                                            <option value="女">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon"> 状态： </span>
+                                    <div class="form-group">
+                                        <select class="form-control" name="hasActive">
+                                            <option value="" selected>所有</option>
+                                            <option value=0>锁定</option>
+                                            <option value=1>有效</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <table id="userTable" data-mobile-responsive="true" class="mb-bootstrap-table text-nowrap"></table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sure" id="system-send" name="sure">确定</button>
+                <button type="button" class="btn btn-secondary btn-close">关闭</button>
+                <button class="btn-hide"></button>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-src="@{js/app/web/system/user_list.js}"></script>

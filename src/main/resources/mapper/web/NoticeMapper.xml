@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.mrbird.web.dao.NoticeMapper" >
+  <resultMap id="BaseResultMap" type="cc.mrbird.web.domain.Notice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="admin_id" property="adminId" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="notice_date" property="noticeDate" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="great_num" property="greatNum" jdbcType="INTEGER" />
+    <result column="replay_num" property="replayNum" jdbcType="INTEGER" />
+    <result column="photo_url" property="photoUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, admin_id, content, notice_date, title, great_num, replay_num, photo_url
+  </sql>
+  <!--分页查询前端公告列表-->
+  <select id="findNoticeByPage" resultMap="BaseResultMap"  parameterType="cc.mrbird.web.domain.Notice">
+    select u.username as name,
+    <include refid="Base_Column_List" />
+    from notice n left join t_user u
+    on n.admin_id = u.USER_ID
+    where 1=1
+    <if test='name != null and name != "" '>
+      AND u.USERNAME like '%${name}%'
+    </if>
+    <if test='title != null and title != "" '>
+      AND n.title like '%${title}%'
+    </if>
+    order by n.notice_date desc
+  </select>
+
+  <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from notice
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <insert id="addNotice" parameterType="cc.mrbird.web.domain.Notice" >
+     insert into notice ( admin_id, content,
+       notice_date, title, great_num,
+       replay_num, photo_url)
+     values (#{adminId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
+       #{noticeDate,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, #{greatNum,jdbcType=INTEGER},
+       #{replayNum,jdbcType=INTEGER}, #{photoUrl,jdbcType=VARCHAR})
+   </insert>
+
+   <delete id="deleteNotice" parameterType="java.lang.Integer" >
+     delete from notice
+     where id = #{id,jdbcType=INTEGER}
+   </delete>
+
+  <update id="updateNotice" parameterType="cc.mrbird.web.domain.Notice" >
+     update notice
+     set
+       content = #{content,jdbcType=VARCHAR},
+       title = #{title,jdbcType=VARCHAR}
+       where id = #{id,jdbcType=INTEGER}
+   </update>
+
+  <!-- <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+     delete from notice
+     where id = #{id,jdbcType=INTEGER}
+   </delete>
+
+   <insert id="insertSelective" parameterType="cc.mrbird.web.domain.Notice" >
+     insert into notice
+     <trim prefix="(" suffix=")" suffixOverrides="," >
+       <if test="id != null" >
+         id,
+       </if>
+       <if test="adminId != null" >
+         admin_id,
+       </if>
+       <if test="content != null" >
+         content,
+       </if>
+       <if test="noticeDate != null" >
+         notice_date,
+       </if>
+       <if test="title != null" >
+         title,
+       </if>
+       <if test="greatNum != null" >
+         great_num,
+       </if>
+       <if test="replayNum != null" >
+         replay_num,
+       </if>
+       <if test="photoUrl != null" >
+         photo_url,
+       </if>
+     </trim>
+     <trim prefix="values (" suffix=")" suffixOverrides="," >
+       <if test="id != null" >
+         #{id,jdbcType=INTEGER},
+       </if>
+       <if test="adminId != null" >
+         #{adminId,jdbcType=INTEGER},
+       </if>
+       <if test="content != null" >
+         #{content,jdbcType=VARCHAR},
+       </if>
+       <if test="noticeDate != null" >
+         #{noticeDate,jdbcType=TIMESTAMP},
+       </if>
+       <if test="title != null" >
+         #{title,jdbcType=VARCHAR},
+       </if>
+       <if test="greatNum != null" >
+         #{greatNum,jdbcType=INTEGER},
+       </if>
+       <if test="replayNum != null" >
+         #{replayNum,jdbcType=INTEGER},
+       </if>
+       <if test="photoUrl != null" >
+         #{photoUrl,jdbcType=VARCHAR},
+       </if>
+     </trim>
+   </insert>
+   <update id="updateByPrimaryKeySelective" parameterType="cc.mrbird.web.domain.Notice" >
+     update notice
+     <set >
+       <if test="adminId != null" >
+         admin_id = #{adminId,jdbcType=INTEGER},
+       </if>
+       <if test="content != null" >
+         content = #{content,jdbcType=VARCHAR},
+       </if>
+       <if test="noticeDate != null" >
+         notice_date = #{noticeDate,jdbcType=TIMESTAMP},
+       </if>
+       <if test="title != null" >
+         title = #{title,jdbcType=VARCHAR},
+       </if>
+       <if test="greatNum != null" >
+         great_num = #{greatNum,jdbcType=INTEGER},
+       </if>
+       <if test="replayNum != null" >
+         replay_num = #{replayNum,jdbcType=INTEGER},
+       </if>
+       <if test="photoUrl != null" >
+         photo_url = #{photoUrl,jdbcType=VARCHAR},
+       </if>
+     </set>
+     where id = #{id,jdbcType=INTEGER}
+   </update>
+   <update id="updateByPrimaryKey" parameterType="cc.mrbird.web.domain.Notice" >
+     update notice
+     set admin_id = #{adminId,jdbcType=INTEGER},
+       content = #{content,jdbcType=VARCHAR},
+       notice_date = #{noticeDate,jdbcType=TIMESTAMP},
+       title = #{title,jdbcType=VARCHAR},
+       great_num = #{greatNum,jdbcType=INTEGER},
+       replay_num = #{replayNum,jdbcType=INTEGER},
+       photo_url = #{photoUrl,jdbcType=VARCHAR}
+     where id = #{id,jdbcType=INTEGER}
+   </update>-->
+</mapper>

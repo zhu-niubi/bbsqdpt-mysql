@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.mrbird.web.dao.SystemMapper" >
+  <resultMap id="BaseResultMap" type="cc.mrbird.web.domain.System" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="if_delete" property="ifDelete" jdbcType="INTEGER" />
+    <result column="creater_id" property="createrId" jdbcType="INTEGER" />
+    <result column="creater_name" property="createrName" jdbcType="VARCHAR" />
+    <result column="is_send" property="isSend" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, content, if_delete, creater_id,creater_name, is_send, date, update_time
+  </sql>
+
+
+  <select id="findSystemByPage" resultMap="BaseResultMap"  parameterType="cc.mrbird.web.domain.System">
+    select
+    <include refid="Base_Column_List" />
+    from system s
+    where 1=1
+    <if test="createrName != null and createrName != ''">
+      AND s.creater_Name like concat(concat("%",#{createrName}),"%")
+    </if>
+    <if test="isSend != null">
+      AND s.is_send = #{isSend}
+    </if>
+    <if test="content != null and content != ''">
+      AND s.content like concat(concat("%",#{content}),"%")
+    </if>
+    order by s.is_send,s.date desc
+  </select>
+
+
+  <update id="updateStatusById"  parameterType="java.lang.Integer">
+    update system set is_send=1 where id=#{id}
+  </update>
+</mapper>

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.mrbird.web.dao.PostMapper" >
+  <resultMap id="BaseResultMap" type="cc.mrbird.web.domain.Post" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="forum" property="forum" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="send_date" property="sendDate" jdbcType="TIMESTAMP" />
+    <result column="post_type" property="postType" jdbcType="INTEGER" />
+    <result column="reply_num" property="replyNum" jdbcType="INTEGER" />
+    <result column="view_num" property="viewNum" jdbcType="INTEGER" />
+    <result column="photo_url" property="photoUrl" jdbcType="VARCHAR" />
+    <result column="if_pass" property="ifPass" jdbcType="INTEGER" />
+    <result column="if_delete" property="ifDelete" jdbcType="INTEGER" />
+    <result column="great_num" property="greatNum" jdbcType="INTEGER" />
+    <result column="card_content" property="cardContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, forum, user_id, title, send_date, post_type, reply_num, view_num, photo_url, 
+    if_pass, if_delete, great_num
+  </sql>
+  <select id="findPostById" resultMap="BaseResultMap"  parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"/>
+    from post
+    where id=#{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findPostByPage" resultMap="BaseResultMap"  parameterType="cc.mrbird.web.domain.Post">
+    select p.*, u.username as username,m.title as typeTitle
+    from
+    (
+    post p left join user u on p.user_id=u.id
+    )
+    left join main_forum m on p.forum=m.id
+    where  p.if_delete=1 and p.if_pass=1 and p.post_type!=2
+    <if test='title != null and title != "" '>
+      AND p.title like '%${title}%'
+    </if>
+    <if test='username != null and username != "" '>
+      AND u.username like '%${username}%'
+    </if>
+    <if test='typeTitle != null and typeTitle != "" '>
+      AND m.title = #{typeTitle}
+    </if>
+    order by p.id desc
+    /*order by p.great_num desc*/
+  </select>
+
+  <select id="findExpPostByPage" resultMap="BaseResultMap"  parameterType="cc.mrbird.web.domain.Post">
+    select p.*, u.username as username,m.title as typeTitle
+    from
+    (
+    post p left join user u on p.user_id=u.id
+    )
+    left join main_forum m on p.forum=m.id
+    where  p.if_pass = 0 and p.if_delete=1
+    <if test='title != null and title != "" '>
+      AND p.title like '%${title}%'
+    </if>
+    <if test='username != null and username != "" '>
+      AND u.username like '%${username}%'
+    </if>
+    <if test='typeTitle != null and typeTitle != "" '>
+      AND m.title = #{typeTitle}
+    </if>
+    order by p.id desc
+  </select>
+
+  <select id="findBestPostByPage" resultMap="BaseResultMap"  parameterType="cc.mrbird.web.domain.Post">
+  select p.*, u.username as username,m.title as typeTitle
+  from
+  (
+  post p left join user u on p.user_id=u.id
+  )
+  left join main_forum m on p.forum=m.id
+  where  p.if_delete=1 and p.post_type=1 and p.if_pass=1
+  <if test='title != null and title != "" '>
+    AND p.title like '%${title}%'
+  </if>
+  <if test='username != null and username != "" '>
+    AND u.username like '%${username}%'
+  </if>
+  <if test='typeTitle != null and typeTitle != "" '>
+    AND m.title = #{typeTitle}
+  </if>
+  order by p.great_num desc
+</select>
+
+  <select id="bestPassPost" resultMap="BaseResultMap"  parameterType="cc.mrbird.web.domain.Post">
+    select p.*, u.username as username,m.title as typeTitle
+    from
+    (
+    post p left join user u on p.user_id=u.id
+    )
+    left join main_forum m on p.forum=m.id
+    where  p.if_delete=1 and p.post_type=2 and p.if_pass=1
+    <if test='title != null and title != "" '>
+      AND p.title like '%${title}%'
+    </if>
+    <if test='username != null and username != "" '>
+      AND u.username like '%${username}%'
+    </if>
+    <if test='typeTitle != null and typeTitle != "" '>
+      AND m.title = #{typeTitle}
+    </if>
+    order by p.great_num desc
+  </select>
+
+  <insert id="addPost" parameterType="cc.mrbird.web.domain.Post" >
+    insert into post (forum, user_id,
+      title, send_date, post_type, 
+      reply_num, view_num, photo_url, 
+      if_pass, if_delete, great_num, 
+      card_content)
+    values (#{forum,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+      #{title,jdbcType=VARCHAR}, #{sendDate,jdbcType=TIMESTAMP}, #{postType,jdbcType=INTEGER}, 
+      #{replyNum,jdbcType=INTEGER}, #{viewNum,jdbcType=INTEGER}, #{photoUrl,jdbcType=VARCHAR}, 
+      #{ifPass,jdbcType=INTEGER}, #{ifDelete,jdbcType=INTEGER}, #{greatNum,jdbcType=INTEGER}, 
+      #{cardContent,jdbcType=LONGVARCHAR})
+  </insert>
+
+  <update id="deletePosts" parameterType="cc.mrbird.web.domain.Post" >
+     update post
+     set
+       if_delete = 0
+       where id = #{id,jdbcType=INTEGER}
+   </update>
+
+  <update id="deleteExpPosts" parameterType="cc.mrbird.web.domain.Post" >
+     update post
+     set
+       if_delete = 0
+       where id = #{id,jdbcType=INTEGER}
+   </update>
+
+  <update id="deleteBestPosts" parameterType="cc.mrbird.web.domain.Post" >
+     update post
+     set
+       if_delete = 0
+       where id = #{id,jdbcType=INTEGER}
+   </update>
+
+  <update id="updatePosts" parameterType="cc.mrbird.web.domain.Post" >
+     update post
+     set
+       post_type = 1
+       where id = #{id,jdbcType=INTEGER}
+   </update>
+
+  <update id="updateEditPost" parameterType="java.lang.Integer" >
+     update post
+     set
+       if_pass = 1
+       where id = #{id,jdbcType=INTEGER}
+   </update>
+
+  <update id="updateBestPassPost" parameterType="java.lang.Integer" >
+     update post
+     set
+       post_type = 1
+       where id = #{id,jdbcType=INTEGER}
+   </update>
+
+  <update id="updateBestTurnPost" parameterType="java.lang.Integer" >
+     update post
+     set
+       post_type = 3
+       where id = #{id,jdbcType=INTEGER}
+   </update>
+</mapper>

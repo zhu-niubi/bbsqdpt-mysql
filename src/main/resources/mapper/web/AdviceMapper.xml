@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.mrbird.web.dao.AdviceMapper">
+    <resultMap id="BaseResultMap" type="cc.mrbird.web.domain.Advice">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="adviceDate" property="advicedate" jdbcType="TIMESTAMP"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    advice.id, user_id, content, adviceDate, title, userName
+  </sql>
+
+    <delete id="deleteAdviceById" parameterType="java.lang.Integer">
+    delete from advice
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <select id="AdviceFindPage" resultMap="BaseResultMap" parameterType="cc.mrbird.web.domain.Advice">
+        select
+        <include refid="Base_Column_List"/>
+        from advice
+        left join
+        user u on u.id = advice.user_id
+        where advice.user_id in (select id from user where 1=1
+        <if test="userName != null and userName != ''">
+            AND username LIKE "%"#{userName}"%"
+        </if>
+        <if test="title != null and title != ''">
+            AND title LIKE "%"#{title}"%"
+        </if>
+        )
+        order by advice.adviceDate desc
+    </select>
+</mapper>

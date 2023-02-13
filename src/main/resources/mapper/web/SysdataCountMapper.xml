@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cc.mrbird.web.dao.SysdataCountMapper" >
+  <resultMap id="BaseResultMap" type="cc.mrbird.web.domain.SysdataCount" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="count_date" property="countDate" jdbcType="DATE" />
+    <result column="count_type" property="countType" jdbcType="VARCHAR" />
+    <result column="count_depict" property="countDepict" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, count_date, count_type, count_depict, num
+  </sql>
+
+  <select id="getDayCountByType" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select num from  sysdata_count where count_type=#{countType} and count_date>=DATE_SUB(NOW(),INTERVAL 1 MONTH)
+  </select>
+</mapper>

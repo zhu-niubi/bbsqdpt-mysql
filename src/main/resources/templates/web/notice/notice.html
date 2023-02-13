@@ -1,0 +1,55 @@
+<div class="card" xmlns:shiro="http://www.w3.org/1999/xhtml">
+    <div data-th-include="web/notice/noticeAdd"></div>
+    <div class="card-block">
+        <div class="table-responsive">
+            <div id="data-table_wrapper" class="dataTables_wrapper">
+                <div class="dataTables_buttons hidden-sm-down actions" style="right: 60px;">
+                    <span class="actions__item zmdi zmdi-search" onclick="search()" title="搜索" /> <span class="actions__item zmdi zmdi-refresh-alt" onclick="refresh()" title="刷新" />
+                   <!-- <div class="dropdown actions__item">
+                        <i data-toggle="dropdown" class="zmdi zmdi-download"> </i>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <a href="javascript:void(0)" class="dropdown-item" data-table-action="excel" onclick="exportNoticeExcel()">
+                                Excel (.xlsx) </a>
+                            <a href="javascript:void(0)" class="dropdown-item" data-table-action="csv" onclick="exportNoticeCsv()"> CSV
+                                (.csv) </a>
+                        </ul>
+                    </div>-->
+                    <div class="dropdown actions__item" shiro:hasAnyPermissions="notice:add,notice:update,notice:delete">
+                        <i data-toggle="dropdown" class="zmdi zmdi-settings" ></i>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#notice-add" shiro:hasPermission="notice:add">新增公告</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="updateNotice()" shiro:hasPermission="notice:update" >修改公告</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="deleteNotice()" shiro:hasPermission="notice:delete" >删除公告</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="data-table_filter" class="dataTables_filter">
+                    <form class="notice-table-form">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon"> 发布者： </span>
+                                    <div class="form-group">
+                                        <input type="text" name="name" class="form-control"> <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon"> 标题： </span>
+                                    <div class="form-group">
+                                        <!--模糊查询标题栏-->
+                                        <input class="form-control" name="title">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <table id="noticeTable" data-mobile-responsive="true" class="mb-bootstrap-table text-nowrap"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-src="@{js/app/web/notice/notice.js}"></script>
+<script data-th-src="@{js/app/web/notice/noticeEdit.js}"></script>

@@ -1,0 +1,59 @@
+<div class="card" xmlns:shiro="http://www.w3.org/1999/xhtml">
+    <div data-th-include="web/system/systemAdd"></div>
+    <div data-th-include="web/system/use_list"></div>
+    <div class="card-block">
+        <div class="table-responsive">
+            <div id="data-table_wrapper" class="dataTables_wrapper">
+                <div class="dataTables_buttons hidden-sm-down actions">
+                    <span class="actions__item zmdi zmdi-search" onclick="search()" title="搜索" /> <span class="actions__item zmdi zmdi-refresh-alt" onclick="refresh()" title="刷新" />
+                    <div class="dropdown actions__item" shiro:hasAnyPermissions="system:add,system:delete">
+                        <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#systemadd" shiro:hasPermission="system:add">新增消息</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="deleteSystems()" shiro:hasPermission="system:delete">删除消息</a>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="data-table_filter" class="dataTables_filter">
+                    <form class="system-table-form">
+                        <div class="row">
+
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon"> 内容： </span>
+                                    <div class="form-group">
+                                        <input type="text" name="content" class="form-control"> <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon"> 创建人： </span>
+                                    <div class="form-group">
+                                        <input type="text" name="createrName" class="form-control"> <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon"> 状态： </span>
+                                    <div class="form-group">
+                                        <select class="form-control" name="isSend">
+                                            <option value="" selected>所有</option>
+                                            <option value=0>未发送</option>
+                                            <option value=1>已发送</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <table id="systemTable" data-mobile-responsive="true" class="mb-bootstrap-table text-nowrap"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-src="@{js/app/web/system/system.js}"></script>
+<script data-th-src="@{js/app/web/system/systemEdit.js}"></script>
